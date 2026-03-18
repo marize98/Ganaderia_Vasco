@@ -1,56 +1,75 @@
 /**
- * Multi-language strings for Baserri-Aditu.
+ * BASERRI-ADITU Internationalization v2.0
+ * Fully bilingual Support (Castellano / Euskera)
  */
-const I18N = {
-    'es': {
-        'welcome': 'Kaixo, {name}!',
-        'expl_label': 'Explotación',
-        'alert_title': 'ALERTA SANITARIA',
-        'stats_census': 'Censo Bovino',
-        'stats_tasks': 'Trámites Pendientes',
-        'quick_guide': 'Solicitar Guía de Salida',
-        'quick_birth': 'Registrar Nacimiento',
-        'nav_home': 'Inicio',
-        'nav_tasks': 'Trámites',
-        'nav_health': 'Sanidad',
-        'nav_profile': 'Mi Perfil'
+
+const translations = {
+    'es-ES': {
+        dashboard: "Dashboard",
+        reports: "Reportes Avanzados",
+        health: "Sanidad Animal",
+        profile: "Mi Perfil",
+        logout: "Cerrar Sesión",
+        welcome: "¡Hola, Ganadero!",
+        system_ok: "Sistema de gestión magistral operativo. ✨",
+        local_time: "Hora Local",
+        sede_time: "Sede (Vitoria-Gasteiz)",
+        census: "Censo Bovino",
+        alerts: "Alertas Sanidad",
+        birth_record: "Registro Nacimiento",
+        exit_guide: "Guía Movimiento",
+        trust_layer_ok: "Validado por Capa de Confianza",
+        urgent_alert: "ALERTA MAGISTRAL URGENTE",
+        read_more: "Leer detalles",
+        confirm_op: "¿Confirmas la operación?",
+        no_reports: "No hay reportes disponibles."
     },
-    'eu': {
-        'welcome': 'Kaixo, {name}!',
-        'expl_label': 'Ustiapena',
-        'alert_title': 'OSASUN OHARRA',
-        'stats_census': 'Behi-errolda',
-        'stats_tasks': 'Zain dauden izapideak',
-        'quick_guide': 'Irteera-gida eskatu',
-        'quick_birth': 'Jaiotza erregistratu',
-        'nav_home': 'Hasiera',
-        'nav_tasks': 'Izapideak',
-        'nav_health': 'Osasuna',
-        'nav_profile': 'Nire Profila'
+    'eu-ES': {
+        dashboard: "Arbel Nagusia",
+        reports: "Txosten Aurreratuak",
+        health: "Animalien Osasuna",
+        profile: "Nire Profila",
+        logout: "Saioa Itxi",
+        welcome: "Kaixo, Baserritarra!",
+        system_ok: "Kudeaketa sistema magistrala martxan. ✨",
+        local_time: "Bertako Ordua",
+        sede_time: "Egoitza (Gasteiz)",
+        census: "Behi Errolda",
+        alerts: "Osasun Alertak",
+        birth_record: "Jaiotza Erregistroa",
+        exit_guide: "Mugimendu Gida",
+        trust_layer_ok: "Konfiantza Geruzak onartua",
+        urgent_alert: "KOGNITIBO ALERTA URGENTEA",
+        read_more: "Xehetasunak irakurri",
+        confirm_op: "Eragiketa berresten duzu?",
+        no_reports: "Ez dago txostenik erabilgarri."
     }
 };
 
-class LanguageManager {
-    constructor() {
-        this.current = localStorage.getItem('baserri_lang') || 'es';
-    }
-
-    set(lang) {
-        this.current = lang;
+const i18n = {
+    currentLang: localStorage.getItem('baserri_lang') || 'es-ES',
+    
+    setLanguage(lang) {
+        this.currentLang = lang;
         localStorage.setItem('baserri_lang', lang);
+        if (window.baserriVoice) window.baserriVoice.setLanguage(lang);
         this.apply();
-        if (window.baserriVoice) window.baserriVoice.setLanguage(lang === 'eu' ? 'eu-ES' : 'es-ES');
-    }
+    },
+
+    t(key) {
+        return translations[this.currentLang][key] || key;
+    },
 
     apply() {
-        // Simple DOM replacement logic
-        const strings = I18N[this.current];
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (strings[key]) el.innerText = strings[key];
+        // Simple DOM mapping for static elements
+        document.querySelectorAll('[data-t]').forEach(el => {
+            const key = el.getAttribute('data-t');
+            if (translations[this.currentLang][key]) {
+                el.innerText = translations[this.currentLang][key];
+            }
         });
+        console.log(`[i18n] Applied ${this.currentLang}`);
     }
-}
+};
 
-window.baserriLang = new LanguageManager();
-window.addEventListener('load', () => window.baserriLang.apply());
+window.i18n = i18n;

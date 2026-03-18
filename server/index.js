@@ -18,8 +18,9 @@ const livestockRoutes = require('./routes/livestock');
 const userRoutes = require('./routes/user');
 
 app.use('/api/auth', authRoutes);
-app.use('/api/livestock', livestockRoutes);
-app.use('/api/user', userRoutes);
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/user', require('./routes/user'));
+app.use('/api/livestock', require('./routes/livestock'));
 
 // Health Check
 app.get('/health', (req, res) => {
