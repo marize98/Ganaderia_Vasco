@@ -48,27 +48,25 @@ class VoiceEngine {
             console.error("[Voice] Error:", e.error);
             this.isRecording = false;
             this.updateUI(false);
+            
             if (e.error === 'network') {
-                this.speak(this.language === 'eu-ES' ? "Konexio arazoa. Geroago saiatuko naiz." : "Problema de conexión. Lo intentaré más tarde.");
+                this.speak(this.language === 'eu-ES' ? "Ahots bidezko zerbitzua itzalita dago internet gabe." : "El servicio de voz no está disponible sin conexión.");
+            } else if (e.error === 'not-allowed') {
+                this.speak(this.language === 'eu-ES' ? "Baimena behar da mikrofonoa erabiltzeko." : "Se requiere permiso para usar el micrófono.");
             }
         };
-    }
-
-    speak(text) {
-        if (this.synth.speaking) this.synth.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = this.language;
-        utterance.rate = 1.0;
-        utterance.pitch = 1.0;
-        this.synth.speak(utterance);
     }
 
     toggle() {
         if (!this.recognition) return;
         try {
-            if (this.isRecording) this.recognition.stop();
-            else this.recognition.start();
+            if (this.isRecording) {
+                this.recognition.stop();
+            } else {
+                this.recognition.start();
+            }
         } catch (e) {
+            console.warn("[Voice] Toggle State Error:", e);
             this.isRecording = false;
             this.updateUI(false);
         }
