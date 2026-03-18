@@ -14,29 +14,14 @@ class VoiceEngine {
 
     setupRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognition) {
-            console.error("Speech Recognition not supported in this browser.");
-            return;
-        }
+        if (!SpeechRecognition) return;
 
         this.recognition = new SpeechRecognition();
         this.recognition.continuous = false;
-        this.recognition.interimResults = false;
         this.recognition.lang = this.language;
-
-        this.recognition.onstart = () => {
-            this.isRecording = true;
-            this.updateUI(true);
-        };
-
-        this.recognition.onend = () => {
-            this.isRecording = false;
-            this.updateUI(false);
-        };
 
         this.recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript.toLowerCase();
-            console.log("Transcript:", transcript);
             this.processCommand(transcript);
         };
     }

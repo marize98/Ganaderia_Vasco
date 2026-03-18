@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso | BASERRI-ADITU</title>
+    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+    <div class="premium-card" style="width: 100%; max-width: 400px; text-align: center;">
+        <img src="assets/img/icon-192.png" style="width: 80px; margin-bottom: 20px;" alt="Logo">
+        <h1 style="color: var(--primary-light);">BASERRI-ADITU</h1>
+        <p class="label" style="margin-bottom: 30px;">Tu Mayoral Digital Cognitivo</p>
+        
+        <form id="login-form" style="display: flex; flex-direction: column; gap: 15px;">
+            <div class="glass" style="padding: 10px; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-user" style="color: var(--text-secondary);"></i>
+                <input type="text" id="username" placeholder="Usuario" style="background: transparent; border: none; color: white; width: 100%; outline: none;">
+            </div>
+            <div class="glass" style="padding: 10px; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-lock" style="color: var(--text-secondary);"></i>
+                <input type="password" id="password" placeholder="Contraseña" style="background: transparent; border: none; color: white; width: 100%; outline: none;">
+            </div>
+            <button type="submit" class="premium-card" style="background: var(--primary); color: white; font-weight: 800; border: none; padding: 15px; margin-top: 20px;">
+                ENTRAR <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            </button>
+        </form>
+        
+        <p style="margin-top: 20px; font-size: 0.8rem; color: var(--text-secondary);">Protegido por Giltza & ENS</p>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const res = await fetch('http://localhost:3000/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await res.json();
+                if (data.token) {
+                    localStorage.setItem('baserri_token', data.token);
+                    localStorage.setItem('baserri_user', JSON.stringify(data.user));
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (err) {
+                alert('No se pudo conectar con el servidor magistral.');
+            }
+        });
+    </script>
+</body>
+</html>

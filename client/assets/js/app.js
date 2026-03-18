@@ -9,6 +9,10 @@ const App = {
     token: localStorage.getItem('baserri_token'),
     
     init() {
+        if (!this.token && !window.location.href.includes('login.html')) {
+            window.location.href = 'login.html';
+            return;
+        }
         console.log("Baserri-Aditu Initialized");
         if (window.baserriLang) window.baserriLang.apply();
         this.setupDB();
