@@ -149,10 +149,13 @@ const App = {
             link.onclick = (e) => {
                 const view = link.getAttribute('data-view');
                 if (view) {
-                    document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
-                    document.getElementById(view).style.display = 'block';
-                    document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
+                    const viewEl = document.getElementById(view);
+                    if (viewEl) {
+                        document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+                        viewEl.style.display = 'block';
+                        document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
                 }
             };
         });

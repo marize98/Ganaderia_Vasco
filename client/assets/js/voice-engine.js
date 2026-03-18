@@ -109,7 +109,7 @@ class VoiceEngine {
 
     detectIntents(text) {
         return {
-            birth: (text.includes("nacido") || text.includes("ternero") || text.includes("jaiotza") || text.includes("txahal")),
+            birth: (text.includes("nacido") || text.includes("ternero") || text.includes("ternera") || text.includes("parid") || text.includes("jaiotza") || text.includes("txahal")),
             movement: (text.includes("mover") || text.includes("guía") || text.includes("mugi") || text.includes("garraio")),
             health: (text.includes("sanidad") || text.includes("enfermo") || text.includes("albaitari") || text.includes("osasuna"))
         };
