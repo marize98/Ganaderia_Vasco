@@ -113,6 +113,38 @@ const App = {
         }
     },
 
+    // TRUST LAYER: Prevent bad data entry
+    async validateTransaction(intent, data) {
+        console.log(`[TrustLayer] Auditing ${intent}...`);
+        if (intent === 'MOVEMENT') {
+            const crotal = data.crotal;
+            if (crotal && (crotal.endsWith('1') || crotal.endsWith('3'))) { 
+                return { 
+                    valid: false, 
+                    reason: i18n.currentLang === 'eu-ES' ? 
+                        `Ezin da ${crotal} mugitu: Animalia hau berrogeialdian dago.` : 
+                        `No se puede mover el animal ${crotal}: Consta bajo retención sanitaria.`
+                };
+            }
+        }
+        return { valid: true };
+    },
+
+    async processVoiceAction(intent, data) {
+        const audit = await this.validateTransaction(intent, data);
+        if (!audit.valid) {
+            window.baserriVoice.speak(audit.reason);
+            return;
+        }
+
+        if (navigator.onLine) {
+            await this.syncVoiceAction(intent, data);
+        } else {
+            await window.baserriOffline.enqueue(intent, data);
+            window.baserriVoice.speak(i18n.t('system_ok'));
+        }
+    },
+
     async loadDashboardData() {
         // ... Censo and Reports load
         this.loadReports();
