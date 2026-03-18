@@ -57,6 +57,15 @@ class VoiceEngine {
         };
     }
 
+    speak(text) {
+        if (this.synth.speaking) this.synth.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = this.language;
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        this.synth.speak(utterance);
+    }
+
     toggle() {
         if (!this.recognition) return;
         try {
