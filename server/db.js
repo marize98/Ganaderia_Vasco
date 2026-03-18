@@ -45,6 +45,16 @@ db.serialize(() => {
             const hashedPass = bcrypt.hashSync('Yasmincita27**', 10);
             db.run("INSERT INTO users (username, password, explotacion_id) VALUES (?, ?, ?)", 
                 ['marize98', hashedPass, 'ES481230009876']);
+            
+            // Seed animals
+            const animals = [
+                ['ES481234567890', 'ES481230009876', 'Bovino', 'Vila', null, 'Excelente'],
+                ['ES481234567891', 'ES481230009876', 'Bovino', 'Vila', null, 'Bien'],
+                ['ES481234567892', 'ES481230009876', 'Bovino', 'Vila', null, 'Regular']
+            ];
+            animals.forEach(a => {
+                db.run("INSERT INTO animals (id, explotacion_id, tipo, estado, madre_id, sanidad) VALUES (?, ?, ?, ?, ?, ?)", a);
+            });
         }
     });
 });

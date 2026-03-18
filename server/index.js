@@ -24,11 +24,15 @@ app.get('/health', (req, res) => {
     res.json({ status: 'OK', message: 'Baserri-Aditu API is operational' });
 });
 
-// Serve Frontend if in production (PWA)
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client')));
-}
+// Serve Frontend Assets (Monolithic Mode for 100% Operational Ease)
+app.use(express.static(path.join(__dirname, '../client')));
+
+// Fallback to index.html for SPA-style routing if needed
+app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) return next();
+    res.sendFile(path.join(__dirname, '../client/index.html'));
+});
 
 app.listen(PORT, () => {
-    console.log(`[BASERRI-ADITU] Server running ultra plus mode on port ${PORT}`);
+    console.log(`[BASERRI-ADITU] Server running in MAGISTRAL mode on port ${PORT}`);
 });

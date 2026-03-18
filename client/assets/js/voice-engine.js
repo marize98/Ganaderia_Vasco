@@ -37,20 +37,38 @@ class VoiceEngine {
     }
 
     async processCommand(text) {
-        // Simple NLP Mapping for Agriculture
+        console.log("[NLP] Analizando intención:", text);
+        
+        // Entity Extraction (Regex-based NLP)
+        const crotalMatch = text.match(/es\d{12}/i);
+        const crotal = crotalMatch ? crotalMatch[0].toUpperCase() : null;
+
         if (text.includes("guía") || text.includes("mover") || text.includes("traslado")) {
-            this.speak("Preparando solicitud de guía de traslado. ¿A qué matadero o destino?");
-            // Logic for movement guide flow
+            if (!crotal) {
+                this.speak("He detectado que quieres una guía. Por favor, dime el número de crotal del animal.");
+                return;
+            }
+            this.speak(`Validando guía para el crotal ${crotal.split('').join(' ')} con la Capa de Confianza...`);
+            const validation = await window.baserriConfianza.validateMovement(crotal, "Matadero");
+            if (validation.valid) {
+                this.speak("Todo en orden. Solicitando guía oficial a la sede electrónica.");
+                await window.baserriTramites.createGuia("Matadero", crotal);
+            } else {
+                this.speak(validation.message);
+            }
         } else if (text.includes("nacimiento") || text.includes("parido") || text.includes("ternero")) {
-            this.speak("Entendido, registrando nuevo nacimiento. ¿Cuál es el número de crotal de la madre?");
-            // Logic for birth registration
-        } else if (text.includes("censo") || text.includes("vaca") || text.includes("cuántos")) {
-            const count = document.querySelector('h2').innerText; // Mock reading from UI
-            this.speak(`Tienes ${count} animales registrados en tu censo actual.`);
-        } else if (text.includes("sanidad") || text.includes("alerta") || text.includes("enfermo")) {
-            this.speak("Hay una alerta por gripe aviar en tu zona. Las aves deben estar confinadas.");
+            this.speak("Entendido, registro de nacimiento. ¿Dime el crotal de la madre?");
+        } else if (crotal && (text.includes("madre") || text.includes("es"))) {
+            this.speak(`Verificando madre ${crotal.split('').join(' ')} en el sistema...`);
+            const validation = await window.baserriConfianza.validateBirth(crotal);
+            if (validation.valid) {
+                this.speak("La madre es válida. He registrado el nacimiento en MUGIDE exitosamente.");
+                await window.baserriTramites.registerBirth(crotal);
+            } else {
+                this.speak(validation.message);
+            }
         } else {
-            this.speak("No he entendido bien. Por favor, dime si quieres registrar un nacimiento o pedir una guía.");
+            this.speak("No he entendido bien. Prueba con: 'Solicitar guía para el crotal ES seguido de doce números'.");
         }
     }
 
