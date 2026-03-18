@@ -5,7 +5,7 @@
 
 const App = {
     db: null,
-    apiBase: "http://localhost:3000/api",
+    apiBase: "/api",
     token: localStorage.getItem('baserri_token'),
     
     init() {
