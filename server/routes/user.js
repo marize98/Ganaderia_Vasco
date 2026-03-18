@@ -19,7 +19,11 @@ const verifyToken = (req, res, next) => {
 // Get Profile
 router.get('/profile', verifyToken, (req, res) => {
     db.get("SELECT id, username, explotacion_id, full_name, role, email, phone FROM users WHERE id = ?", [req.userId], (err, user) => {
-        if (err) return res.status(500).json({ message: 'Database error' });
+        if (err) {
+            console.error('[DATABASE ERROR]', err.message);
+            return res.status(500).json({ message: 'Database error', detail: err.message });
+        }
+        if (!user) return res.status(404).json({ message: 'User not found' });
         res.json(user);
     });
 });
