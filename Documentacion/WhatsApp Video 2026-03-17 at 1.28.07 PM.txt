@@ -1,0 +1,137 @@
+A ver, ¿cómo conseguimos modernizar la burocracia para un sector que es absolutamente esencial,
+pero que muchas veces la tecnología parece haber olvidado?
+Pues hoy vamos a ver una solución muy ingeniosa a esa pregunta.
+Se llama Vaserri Aditu, y es un proyecto que busca dar voz, pero de forma literal,
+a los agricultores y ganaderos de Bizkaya.
+Para que nos hagamos una idea de por qué esto es tan importante,
+primero tenemos que entender el problema.
+Y la verdad, esta frase lo clava.
+Poneros en situación.
+Trámites súper complejos.
+Notificaciones que llegan por correo postal, llenas de palabras que no hay quien entienda.
+Y la necesidad constante de tener que desplazarte o de pedirle ayuda a alguien.
+Esto al final no es solo un incordio, es el pan de cada día, una barrera constante.
+Así que vamos a meternos de lleno en esto.
+El reto específico de los Vaserri Tarras.
+Un desafío que viene marcado por unas circunstancias muy, muy particulares.
+Y aquí tenemos el resumen de los cuatro grandes obstáculos.
+Ojo que no es solo una cosa, es que se junta todo.
+Por un lado, una edad media elevada.
+Por otro, una brecha digital que no va solo de no tener un ordenador,
+va de no estar acostumbrado a cómo funcionan las apps.
+Si a eso les sumamos que en el campo la cobertura de Internet va y viene
+y que la jerga de la administración parece un idioma distinto, pues el cocktail es tremendo.
+Entonces, ante este panorama, cuál podría ser la solución?
+Pues aquí entra la idea de un mayoral digital.
+Que es como han llamado a Vaserri Aditu.
+Un concepto que la verdad le da una vuelta de tuerca a todo.
+Y aquí está el cuid de la cuestión.
+El principio de interfaz 0 o 0 y.
+Sona un poco raro, verdad?
+Decir que la mejor pantalla es no tener pantalla.
+Pero pensad lo bien.
+En lugar de obligar a la gente a aprender a usar menus, botones y formularios,
+la tecnología es la que aprende a entender su voz.
+Simplemente, la barrera de la pantalla desaparece.
+Esta tabla lo deja clarísimo.
+Fijaos a la izquierda el modelo de siempre, el que está lleno de dificultades.
+Y a la derecha es de nuevo enfoque.
+Pasamos de tener que aprender a usar algo a simplemente tener una conversación.
+De depender de la conexión a poder trabajar sin ella,
+de rellenar formularios interminables,
+a dar órdenes de voz sencillas.
+Es que se cambia la navegación por la intención brutal.
+Vale, sobre el papel, la idea es una genial,
+pero esto de verdad funciona en el día a día.
+Vamos a bordar las preguntas clave en las dudas que surgen enseguida.
+Empezamos por la pregunta más evidente, la más crítica.
+Si ya de por si hay dificultades con la tecnología actual,
+¿por qué una inteligencia artificial va a ser diferente?
+Es una duda súper lógica, la que nos haríamos todos.
+Pues la respuesta es, para mí, la magia de este proyecto.
+El punto clave es que no se les está pidiendo que aprendan a usar una app nueva.
+Es al revés.
+Es la herramienta la que se adapta a ellos,
+la que aprende su forma de hablar, sus expresiones,
+y da igual si es en eusquera o en castellano.
+La tecnología de repente se vuelve invisible.
+Y lo que quiera es, simplemente, una conversación útil.
+Vamos con el siguiente problemón y este es de los gordos.
+Estamos hablando del campo de sitios donde la cobertura móvil
+con suerte es intermitente.
+Cualquier app que necesita internet para funcionar
+está destinada a fracasar.
+¿Cómo se soluciona eso?
+Pues la solución es una arquitectura que se llama local first.
+Esto, traducido, significa que la aplicación está pensada
+para funcionar sin internet por defecto.
+Todo lo importante pasa dentro del teléfono.
+Los datos se guardan y se procesan ahí mismo.
+La conexión a internet pasa a ser algo secundario
+que se usa solo para sincronizar cuando pilla cobertura.
+Mirad qué sencillo es el proceso.
+Primero, el ganadero.
+Este, donde esté, en medio del monte sin cobertura,
+le dicta una orden a la app.
+Por ejemplo, voy a mover esta vaca a tal sitio.
+Segundo, la app guarda esa orden de voz, de forma segura,
+en la memoria del teléfono.
+Y tercero, y esto es lo mejor.
+En cuanto al móvil detecta que vuelve a tener conexión,
+la app envía esa información sola, de forma automática.
+El usuario no tiene que hacer nada más.
+Bueno, hemos resuelto la facilidad de uso
+y el problema de la conexión.
+Pero ahora viene un tema más delicado.
+La seguridad y la fiabilidad de los trámites oficiales.
+Esta es la pregunta del millón, claro.
+Un error aquí no es como poner una canción que no te gusta.
+Un registro mal hecho puede tener consecuencias serias
+tanto administrativas como económicas,
+que red de seguridad hay para evitar esto.
+La respuesta es esta capa de confianza.
+Y lo interesante es cómo funciona.
+El sistema nunca, nunca ejecuta una orden directamente.
+Primero procesa lo que ha oído.
+Pero antes de enviar nada,
+de devuelve una pregunta de confirmación, también por voz.
+Algo tan simple y potente como.
+Oye, ¿qué vas a hacer esto?
+Dici para confirmar.
+Así, el control final siempre, siempre lo tiene la persona.
+Y vamos con la última gran duda.
+Esta aplicación es en esencia un puente
+a la sede electrónica de la administración.
+Eso significa que se manejan datos muy, pero que muy sensibles.
+¿Cómo se aseguran de que todo el proceso sea un bunker?
+Pues la seguridad se apoya entre espilares súper sólidos.
+Primero la autenticación.
+Aquí nos inventan nada, se integra directamente
+con el sistema oficial Guilza, que es el que ya se usa.
+Segundo, todo absolutamente toda la comunicación
+viaja cifrada con los protocolos más modernos.
+Y tercero, cada cosa que se hace deja un rastro inborrable.
+Una historia del trámite.
+Así se puede saber qué se hizo, quién lo hizo y cuando.
+Tras habilidad total.
+Bien, hemos visto la tecnología.
+Pero ¿cuál es el impacto real de todo esto?
+Pues aquí es donde el proyecto va un paso más allá.
+Y de hecho, humaniza la burocracia.
+Y yo creo que este es el mensaje final.
+Bacerreadito no es solo una aplicación más.
+Es un ejemplo perfecto de diseño centrado en la persona.
+En lugar de pedirle a la gente que se adapte a la tecnología,
+lo que se ha hecho es diseñar una tecnología
+que se adapta a sus necesidades, a su forma de vida y a su realidad.
+Y así, lo que podría ser una barrera se convierte en un puente.
+Y acabamos con esta reflexión para darle vueltas.
+Si una interfaz tan natural, tan humana como la voz,
+puede simplificar la burocracia para uno de los sectores
+con más reto digitales, las posibilidades son enormes.
+Esto abre la puerta que nos replantemos
+cómo nos relacionamos con la administración
+en muchísimos otros campos.
+Que otros servicios podrían dejar de necesitar una pantalla
+para funcionar.
+Hay queda la pregunta.

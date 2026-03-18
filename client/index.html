@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>BASERRI-ADITU | Tu Mayoral Digital</title>
+    <!-- Essential Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2e7d32">
+</head>
+<body>
+
+    <main id="app" style="padding: 20px 20px 100px 20px;">
+        <header style="margin-bottom: 30px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1 style="margin-bottom: 5px;" data-i18n="welcome">Kaixo, Patxi!</h1>
+                    <p class="label"><span data-i18n="expl_label">Explotación</span>: ES481230009876</p>
+                </div>
+                <div class="glass" style="padding: 10px; border-radius: 50%;" onclick="baserriLang.set(baserriLang.current === 'es' ? 'eu' : 'es')">
+                    <span style="font-weight: 800; font-size: 0.8rem;">ES/EU</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Alert Section -->
+        <section id="alerts" style="margin-bottom: 25px;">
+            <div class="premium-card" style="border-left: 5px solid var(--accent); background: rgba(211, 47, 47, 0.05);">
+                <div style="display: flex; align-items: flex-start; gap: 15px;">
+                    <i class="fa-solid fa-triangle-exclamation" style="color: var(--accent); font-size: 1.5rem; margin-top: 5px;"></i>
+                    <div>
+                        <h2 style="font-size: 1.2rem; color: var(--accent);" data-i18n="alert_title">ALERTA SANITARIA</h2>
+                        <p id="alert-text" style="font-size: 1rem;">FOCO DE GRIPE AVIAR DETECTADO EN ZONA DURANGALDEA. Las aves deben permanecer confinadas.</p>
+                        <button class="glass" style="margin-top: 10px; padding: 8px 15px; border: none; color: white; display: flex; align-items: center; gap: 8px;" onclick="baserriVoice.speak(document.getElementById('alert-text').innerText)">
+                            <i class="fa-solid fa-ear-listen"></i> <span data-i18n="listen_btn">Escuchar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Stats Grid -->
+        <section style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
+            <div class="premium-card">
+                <p class="label" data-i18n="stats_census">Censo Bovino</p>
+                <h2 style="font-size: 2.2rem; margin: 10px 0;">42</h2>
+                <span class="status-badge status-ok">38 Adultos</span>
+            </div>
+            <div class="premium-card">
+                <p class="label" data-i18n="stats_tasks">Trámites Pendientes</p>
+                <h2 style="font-size: 2.2rem; margin: 10px 0;">3</h2>
+                <span class="status-badge status-alert">Revisión DIB</span>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section>
+            <h2 data-i18n="actions_title">Gestiones Rápidas</h2>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div class="premium-card" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <i class="fa-solid fa-truck-moving" style="color: var(--primary-light); font-size: 1.4rem;"></i>
+                        <span data-i18n="quick_guide">Solicitar Guía de Salida</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: var(--text-secondary);"></i>
+                </div>
+                <div class="premium-card" style="display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <i class="fa-solid fa-cow" style="color: var(--secondary); font-size: 1.4rem;"></i>
+                        <span data-i18n="quick_birth">Registrar Nacimiento</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right" style="color: var(--text-secondary);"></i>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Voice Control -->
+    <button id="voice-trigger" class="voice-btn">
+        <i class="fa-solid fa-microphone"></i>
+    </button>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <i class="fa-solid fa-house"></i>
+            <span data-i18n="nav_home">Inicio</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-clipboard-list"></i>
+            <span data-i18n="nav_tasks">Trámites</span>
+        </a>
+        <div style="width: 80px;"></div> <!-- Space for voice button -->
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-stethoscope"></i>
+            <span data-i18n="nav_health">Sanidad</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fa-solid fa-user-circle"></i>
+            <span data-i18n="nav_profile">Mi Perfil</span>
+        </a>
+    </nav>
+
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/voice-engine.js"></script>
+    <script src="assets/js/tramites.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

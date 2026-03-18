@@ -1,0 +1,134 @@
+:root {
+    /* Premium Color Palette - Agriculture & Bizkaia focused */
+    --primary: #2e7d32; /* Forest Green */
+    --primary-light: #4caf50;
+    --primary-dark: #1b5e20;
+    --secondary: #fbc02d; /* Basque Gold/Sun */
+    --accent: #d32f2f; /* Alert Red */
+    --bg-dark: #0a0e14;
+    --bg-card: #161c24;
+    --text-primary: #ffffff;
+    --text-secondary: #919eab;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+
+    /* Accessibility Tokens (Senior Friendly) */
+    --font-base: 18px;
+    --font-heading: 1.5rem;
+    --border-radius: 16px;
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-size: var(--font-base);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Glassmorphism Classes */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius);
+}
+
+.premium-card {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid var(--glass-border);
+}
+
+.premium-card:active {
+    transform: scale(0.98);
+}
+
+/* Voice Interaction Pulse Animation */
+@keyframes pulse-voice {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(76, 175, 80, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+
+.voice-btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.voice-btn.active {
+    animation: pulse-voice 1.5s infinite;
+    background: var(--accent);
+}
+
+/* Typography Overrides for Senior Accessibility */
+h1 { font-size: 2.2rem; font-weight: 800; color: var(--secondary); margin-bottom: var(--spacing-md); }
+h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: var(--spacing-sm); }
+
+.label { font-size: 0.9rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.status-ok { background: rgba(46, 125, 50, 0.2); color: var(--primary-light); }
+.status-alert { background: rgba(211, 47, 47, 0.2); color: var(--accent); }
+
+/* Navigation Bar */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    background: var(--bg-card);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid var(--glass-border);
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.nav-item.active { color: var(--primary-light); }
+.nav-item i { font-size: 1.5rem; margin-bottom: 4px; }
