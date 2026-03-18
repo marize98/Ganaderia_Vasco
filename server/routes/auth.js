@@ -24,12 +24,19 @@ router.post('/login', (req, res) => {
 
 router.post('/register', (req, res) => {
     const { username, password, explotacion_id, full_name, email } = req.body;
-    const hashedPass = bcrypt.hashSync(password, 10);
     
-    db.run("INSERT INTO users (username, password, explotacion_id, full_name, email) VALUES (?, ?, ?, ?, ?)", 
-        [username, hashedPass, explotacion_id || 'ES480000000000', full_name || username, email || ''], function(err) {
-        if (err) return res.status(400).json({ message: 'El usuario ya existe o datos inválidos' });
-        res.json({ message: 'Registro completado', id: this.lastID });
+    // Validate inputs
+    if (!username || !password) return res.status(400).json({ message: 'Usuario y contraseña son requeridos' });
+
+    db.get("SELECT id FROM users WHERE username = ?", [username], (err, existingUser) => {
+        if (existingUser) return res.status(400).json({ message: 'El nombre de usuario ya está registrado' });
+        
+        const hashedPass = bcrypt.hashSync(password, 10);
+        db.run("INSERT INTO users (username, password, explotacion_id, full_name, email) VALUES (?, ?, ?, ?, ?)", 
+            [username, hashedPass, explotacion_id || 'ES480000000000', full_name || username, email || ''], function(err) {
+            if (err) return res.status(500).json({ message: 'Error interno al registrar usuario' });
+            res.json({ message: 'Registro completado con éxito', id: this.lastID });
+        });
     });
 });
 

@@ -29,9 +29,12 @@ app.get('/health', (req, res) => {
 // Serve Frontend Assets (Monolithic Mode for 100% Operational Ease)
 app.use(express.static(path.join(__dirname, '../client')));
 
-// Fallback to index.html for SPA-style routing if needed
+// Fallback to index.html for SPA-style routing
 app.get('*', (req, res, next) => {
-    if (req.path.startsWith('/api')) return next();
+    // If it looks like a request for an API or a static file (has an extension), don't serve index.html
+    if (req.path.startsWith('/api') || req.path.includes('.')) {
+        return res.status(404).json({ message: 'Resource not found' });
+    }
     res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
