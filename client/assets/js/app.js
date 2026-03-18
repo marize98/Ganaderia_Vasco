@@ -1,91 +1,75 @@
 /**
- * BASERRI-ADITU Main App Logic
- * Handles data synchronization, offline storage, and UI updates.
+ * BASERRI-ADITU Application Engine
+ * Handles SPA navigation, Perfil, and reports.
  */
 
 const App = {
-    db: null,
-    apiBase: "/api",
+    user: JSON.parse(localStorage.getItem('baserri_user') || '{}'),
     token: localStorage.getItem('baserri_token'),
-    
+    apiBase: "/api",
+
     init() {
         if (!this.token && !window.location.href.includes('login.html')) {
             window.location.href = 'login.html';
             return;
         }
-        console.log("Baserri-Aditu Initialized");
-        if (window.baserriLang) window.baserriLang.apply();
-        this.setupDB();
-        this.registerServiceWorker();
-        this.bindEvents();
         
-        if (this.token) this.syncWithServer();
+        this.renderWelcome();
+        this.setupNavigation();
+        this.loadDashboardData();
+        console.log("Baserri-Aditu Magistral Initialized");
     },
 
-    async syncWithServer() {
+    renderWelcome() {
+        const welcomeEl = document.getElementById('welcome-msg');
+        if (welcomeEl) {
+            welcomeEl.innerText = `Kaixo, ${this.user.username || 'Ganadero'}!`;
+        }
+    },
+
+    logout() {
+        localStorage.clear();
+        window.location.href = 'login.html';
+    },
+
+    navigate(viewId) {
+        console.log("Navigating to:", viewId);
+        document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+        const activeView = document.getElementById(viewId);
+        if (activeView) activeView.style.display = 'block';
+        
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        const navItem = document.querySelector(`[data-view="${viewId}"]`);
+        if (navItem) navItem.classList.add('active');
+    },
+
+    setupNavigation() {
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.onclick = (e) => {
+                e.preventDefault();
+                const view = item.getAttribute('data-view');
+                if (view) this.navigate(view);
+            };
+        });
+    },
+
+    async loadDashboardData() {
         try {
             const res = await fetch(`${this.apiBase}/livestock/census`, {
                 headers: { 'Authorization': `Bearer ${this.token}` }
             });
             const data = await res.json();
-            if (data.count !== undefined) {
-                document.querySelector('h2').innerText = data.count;
-                this.saveToLocal("censos", { id: "EXPLO_01", count: data.count });
-            }
+            const censusEl = document.getElementById('census-count');
+            if (censusEl && data.animals) censusEl.innerText = data.animals.length;
         } catch (e) {
-            console.warn("Offline mode - using local cache");
+            console.warn("Error loading dashboard data.");
         }
     },
 
-    async setupDB() {
-        // Open/Create IndexedDB for Offline-First capability
-        const request = indexedDB.open("BaserriDB", 1);
-        
-        request.onupgradeneeded = (event) => {
-            const db = event.target.result;
-            if (!db.objectStoreNames.contains("censos")) db.createObjectStore("censos", { keyPath: "id" });
-            if (!db.objectStoreNames.contains("tramites")) db.createObjectStore("tramites", { keyPath: "id", autoIncrement: true });
-            if (!db.objectStoreNames.contains("alertas")) db.createObjectStore("alertas", { keyPath: "id" });
-        };
-
-        request.onsuccess = (event) => {
-            this.db = event.target.result;
-            console.log("IndexedDB metadata ready");
-            this.loadInitialData();
-        };
-    },
-
-    loadInitialData() {
-        // Mocking data retrieval from MUGIDE
-        const mockCenso = { id: "ES481230009876", count: 42, details: "38 Adultos, 4 Terneros" };
-        this.saveToLocal("censos", mockCenso);
-    },
-
-    saveToLocal(storeName, data) {
-        const transaction = this.db.transaction([storeName], "readwrite");
-        const store = transaction.objectStore(storeName);
-        store.put(data);
-    },
-
-    registerServiceWorker() {
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("sw.js")
-                .then(() => console.log("Service Worker registered"))
-                .catch(err => console.error("SW failed", err));
-        }
-    },
-
-    bindEvents() {
-        // Handle UI Nav switching (Mock)
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-                // Navigation logic would go here
-            });
-        });
+    generateReport() {
+        alert("Generando reporte magistral de explotación... (SITRAN sync activo)");
     }
 };
 
-window.addEventListener('load', () => App.init());
+window.addEventListener('DOMContentLoaded', () => App.init());
+window.baserriApp = App;

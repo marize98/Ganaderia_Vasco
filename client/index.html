@@ -2,113 +2,107 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>BASERRI-ADITU | Tu Mayoral Digital</title>
-    <!-- Essential Libraries -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BASERRI-ADITU | Magistral</title>
     <link rel="stylesheet" href="assets/css/index.css">
-    <!-- PWA Support -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2e7d32">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
     <main id="app" style="padding: 20px 20px 100px 20px;">
-        <header style="margin-bottom: 30px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h1 style="margin-bottom: 5px;" data-i18n="welcome">Kaixo, Patxi!</h1>
-                    <p class="label"><span data-i18n="expl_label">Explotación</span>: ES481230009876</p>
-                </div>
-                <div class="glass" style="padding: 10px; border-radius: 50%;" onclick="baserriLang.set(baserriLang.current === 'es' ? 'eu' : 'es')">
-                    <span style="font-weight: 800; font-size: 0.8rem;">ES/EU</span>
-                </div>
+        <!-- Header -->
+        <header style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h1 id="welcome-msg">Kaixo!</h1>
+                <p class="label">EXPL: ${user.explotacion_id}</p>
             </div>
+            <div class="glass" style="padding: 5px 12px; font-weight: 800; cursor: pointer;">ES/EU</div>
         </header>
 
-        <!-- Dynamic Alert Section -->
-        <section id="alerts" style="margin-bottom: 25px;">
-            <div class="premium-card" style="border-left: 5px solid var(--accent); background: rgba(211, 47, 47, 0.05);">
-                <div style="display: flex; align-items: flex-start; gap: 15px;">
-                    <i class="fa-solid fa-triangle-exclamation" style="color: var(--accent); font-size: 1.5rem; margin-top: 5px;"></i>
-                    <div>
-                        <h2 style="font-size: 1.2rem; color: var(--accent);" data-i18n="alert_title">ALERTA SANITARIA</h2>
-                        <p id="alert-text" style="font-size: 1rem;">FOCO DE GRIPE AVIAR DETECTADO EN ZONA DURANGALDEA. Las aves deben permanecer confinadas.</p>
-                        <button class="glass" style="margin-top: 10px; padding: 8px 15px; border: none; color: white; display: flex; align-items: center; gap: 8px;" onclick="baserriVoice.speak(document.getElementById('alert-text').innerText)">
-                            <i class="fa-solid fa-ear-listen"></i> <span data-i18n="listen_btn">Escuchar</span>
-                        </button>
-                    </div>
-                </div>
+        <!-- Dynamic Views -->
+        <div id="view-dashboard" class="view">
+            <div class="glass alert-banner" style="margin-bottom: 25px;">
+                <p class="label" style="color: var(--danger); font-weight: 900;">ALERTA SANITARIA</p>
+                <p style="margin-top: 10px; line-height: 1.6;">Zona Bizkaia: Vacunación obligatoria activa.</p>
             </div>
-        </section>
 
-        <!-- Main Stats Grid -->
-        <section style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
-            <div class="premium-card">
-                <p class="label" data-i18n="stats_census">Censo Bovino</p>
-                <h2 style="font-size: 2.2rem; margin: 10px 0;">42</h2>
-                <span class="status-badge status-ok">38 Adultos</span>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
+                <div class="glass">
+                    <p class="label">Censo Bovino</p>
+                    <h2 id="census-count" style="font-size: 2.5rem; margin: 10px 0;">--</h2>
+                    <span style="color: var(--success); font-weight: 700;">● Vila</span>
+                </div>
+                <div class="glass" onclick="baserriApp.generateReport()">
+                    <p class="label">Trámites</p>
+                    <h2 style="font-size: 2.5rem; margin: 10px 0;">3</h2>
+                    <span style="color: var(--accent); font-weight: 700;">Pendientes</span>
+                </div>
             </div>
-            <div class="premium-card">
-                <p class="label" data-i18n="stats_tasks">Trámites Pendientes</p>
-                <h2 style="font-size: 2.2rem; margin: 10px 0;">3</h2>
-                <span class="status-badge status-alert">Revisión DIB</span>
-            </div>
-        </section>
 
-        <!-- Quick Actions -->
-        <section>
-            <h2 data-i18n="actions_title">Gestiones Rápidas</h2>
-            <div style="display: flex; flex-direction: column; gap: 12px;">
-                <div class="premium-card" style="display: flex; align-items: center; justify-content: space-between;">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <i class="fa-solid fa-truck-moving" style="color: var(--primary-light); font-size: 1.4rem;"></i>
-                        <span data-i18n="quick_guide">Solicitar Guía de Salida</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right" style="color: var(--text-secondary);"></i>
+            <h3 class="label" style="margin-bottom: 15px;">Gestiones Rápidas</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div class="glass premium-card" style="display: flex; justify-content: space-between; align-items: center;" onclick="baserriVoice.speak('Dime el crotal para la guía de salida.')">
+                    <span><i class="fa-solid fa-truck-moving" style="color: var(--accent);"></i> Solicitar Guía</span>
+                    <i class="fa-solid fa-chevron-right"></i>
                 </div>
-                <div class="premium-card" style="display: flex; align-items: center; justify-content: space-between;">
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <i class="fa-solid fa-cow" style="color: var(--secondary); font-size: 1.4rem;"></i>
-                        <span data-i18n="quick_birth">Registrar Nacimiento</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-right" style="color: var(--text-secondary);"></i>
+                <div class="glass premium-card" style="display: flex; justify-content: space-between; align-items: center;" onclick="baserriVoice.speak('Preparado para registrar nacimiento. ¿Croctal de la madre?')">
+                    <span><i class="fa-solid fa-cow" style="color: var(--accent);"></i> Registrar Nacimiento</span>
+                    <i class="fa-solid fa-chevron-right"></i>
                 </div>
             </div>
-        </section>
+        </div>
+
+        <div id="view-tramites" class="view" style="display:none;">
+            <h2 style="margin-bottom: 20px;">Trámites Oficiales</h2>
+            <div class="glass">
+                <p>Histórico de guías y movimientos SITRAN.</p>
+            </div>
+        </div>
+
+        <div id="view-sanidad" class="view" style="display:none;">
+            <h2 style="margin-bottom: 20px;">Sanidad Animal</h2>
+            <div class="glass">
+                <p>Campañas de vacunación y resultados laboratorio.</p>
+            </div>
+        </div>
+
+        <div id="view-perfil" class="view" style="display:none;">
+            <h2 style="margin-bottom: 20px;">Mi Perfil</h2>
+            <div class="glass" style="text-align: center;">
+                <i class="fa-solid fa-circle-user" style="font-size: 4rem; color: var(--accent); margin-bottom: 15px;"></i>
+                <h3 id="profile-name">Expl. Bizkaia</h3>
+                <button onclick="baserriApp.logout()" class="glass" style="margin-top: 20px; color: var(--danger); border-color: var(--danger); width: 100%;">CERRAR SESIÓN</button>
+            </div>
+        </div>
     </main>
 
-    <!-- Voice Control -->
-    <button id="voice-trigger" class="voice-btn">
-        <i class="fa-solid fa-microphone"></i>
-    </button>
-
-    <!-- Bottom Navigation -->
+    <!-- Navigation -->
     <nav class="bottom-nav">
-        <a href="#" class="nav-item active">
+        <a href="#" class="nav-item active" data-view="view-dashboard">
             <i class="fa-solid fa-house"></i>
-            <span data-i18n="nav_home">Inicio</span>
+            <span>Inicio</span>
         </a>
-        <a href="#" class="nav-item">
+        <a href="#" class="nav-item" data-view="view-tramites">
             <i class="fa-solid fa-clipboard-list"></i>
-            <span data-i18n="nav_tasks">Trámites</span>
+            <span>Trámites</span>
         </a>
-        <div style="width: 80px;"></div> <!-- Space for voice button -->
-        <a href="#" class="nav-item">
+        
+        <div id="mic-btn" class="mic-btn" onclick="baserriVoice.toggle()">
+            <i class="fa-solid fa-microphone" style="font-size: 1.5rem; color: white;"></i>
+        </div>
+
+        <a href="#" class="nav-item" data-view="view-sanidad">
             <i class="fa-solid fa-stethoscope"></i>
-            <span data-i18n="nav_health">Sanidad</span>
+            <span>Sanidad</span>
         </a>
-        <a href="#" class="nav-item">
-            <i class="fa-solid fa-user-circle"></i>
-            <span data-i18n="nav_profile">Mi Perfil</span>
+        <a href="#" class="nav-item" data-view="view-perfil">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Perfil</span>
         </a>
     </nav>
 
     <script src="assets/js/i18n.js"></script>
     <script src="assets/js/confianza.js"></script>
     <script src="assets/js/voice-engine.js"></script>
-    <script src="assets/js/tramites.js"></script>
     <script src="assets/js/app.js"></script>
 </body>
 </html>

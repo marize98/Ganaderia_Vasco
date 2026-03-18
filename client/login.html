@@ -3,31 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso | BASERRI-ADITU</title>
+    <title>Acceso Magistral | BASERRI-ADITU</title>
     <link rel="stylesheet" href="assets/css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: radial-gradient(circle at top right, #1a472a, #0a0e14);
+        }
+        .login-box {
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: var(--accent); background: rgba(255,255,255,0.1); }
+        .btn-magistral {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent), #b8860b);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+    </style>
 </head>
-<body style="display: flex; align-items: center; justify-content: center; height: 100vh;">
-    <div class="premium-card" style="width: 100%; max-width: 400px; text-align: center;">
-        <img src="assets/img/icon-192.png" style="width: 80px; margin-bottom: 20px;" alt="Logo">
-        <h1 style="color: var(--primary-light);">BASERRI-ADITU</h1>
-        <p class="label" style="margin-bottom: 30px;">Tu Mayoral Digital Cognitivo</p>
-        
-        <form id="login-form" style="display: flex; flex-direction: column; gap: 15px;">
-            <div class="glass" style="padding: 10px; display: flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-user" style="color: var(--text-secondary);"></i>
-                <input type="text" id="username" placeholder="Usuario" style="background: transparent; border: none; color: white; width: 100%; outline: none;">
+<body>
+    <div class="glass login-box">
+        <div style="margin-bottom: 30px;">
+            <i class="fa-solid fa-cow" style="font-size: 3rem; color: var(--accent);"></i>
+            <h1 style="margin-top: 10px;">Baserri-Aditu</h1>
+            <p class="label">El Mayoral Digital Cognitivo</p>
+        </div>
+
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Usuario / ID Explotación" required autocomplete="username">
+            <input type="password" id="password" placeholder="Contraseña Segura" required autocomplete="current-password">
+            
+            <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem;">
+                <a href="#" style="color: var(--text-secondary); text-decoration: none;">¿Olvidaste tu clave?</a>
+                <a href="#" style="color: var(--accent); text-decoration: none; font-weight: 700;">Registrarse</a>
             </div>
-            <div class="glass" style="padding: 10px; display: flex; align-items: center; gap: 10px;">
-                <i class="fa-solid fa-lock" style="color: var(--text-secondary);"></i>
-                <input type="password" id="password" placeholder="Contraseña" style="background: transparent; border: none; color: white; width: 100%; outline: none;">
-            </div>
-            <button type="submit" class="premium-card" style="background: var(--primary); color: white; font-weight: 800; border: none; padding: 15px; margin-top: 20px;">
-                ENTRAR <i class="fa-solid fa-arrow-right-to-bracket"></i>
-            </button>
+
+            <button type="submit" class="btn-magistral">INICIAR SESIÓN</button>
         </form>
-        
-        <p style="margin-top: 20px; font-size: 0.8rem; color: var(--text-secondary);">Protegido por Giltza & ENS</p>
+
+        <p style="margin-top: 40px; font-size: 0.7rem; color: var(--text-secondary); opacity: 0.6;">
+            BASERRI-ADITU v1.0.4 | © LANTIC / DFB
+        </p>
     </div>
 
     <script>
@@ -48,10 +92,10 @@
                     localStorage.setItem('baserri_user', JSON.stringify(data.user));
                     window.location.href = 'index.html';
                 } else {
-                    alert('Error: ' + data.message);
+                    alert('Acceso denegado: ' + (data.message || 'Credenciales incorrectas'));
                 }
             } catch (err) {
-                alert('No se pudo conectar con el servidor magistral.');
+                alert('Error magistral: No se pudo conectar con el servidor.');
             }
         });
     </script>
