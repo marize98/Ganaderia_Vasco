@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso Magistral | BASERRI-ADITU</title>
+    <title>Bienvenido | BASERRI-ADITU</title>
     <link rel="stylesheet" href="assets/css/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -12,92 +12,222 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: radial-gradient(circle at top right, #1a472a, #0a0e14);
+            background: #0a0e14;
+            padding: 20px;
         }
-        .login-box {
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            animation: fadeIn 0.8s ease-out;
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            background: linear-gradient(180deg, rgba(26, 71, 42, 0.2) 0%, rgba(10, 14, 20, 0) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 100px rgba(26, 71, 42, 0.1);
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .logo-box {
+            background: #1a1a1a;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
         input {
             width: 100%;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 14px;
             background: rgba(255,255,255,0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
             color: white;
             outline: none;
             transition: 0.3s;
         }
-        input:focus { border-color: var(--accent); background: rgba(255,255,255,0.1); }
-        .btn-magistral {
+        input:focus {
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
+        }
+        .btn-action {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, var(--accent), #b8860b);
+            background: linear-gradient(90deg, #4d5ef7 0%, #a855f7 100%);
             border: none;
-            border-radius: 12px;
-            color: #000;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 700;
             cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            transition: 0.3s;
+            margin-top: 10px;
         }
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(77, 94, 247, 0.4);
+        }
+        .link-text {
+            font-size: 0.8rem;
+            color: #4d5ef7;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .state-view { display: none; }
+        .state-view.active { display: block; }
     </style>
 </head>
 <body>
-    <div class="glass login-box">
-        <div style="margin-bottom: 30px;">
-            <i class="fa-solid fa-cow" style="font-size: 3rem; color: var(--accent);"></i>
-            <h1 style="margin-top: 10px;">Baserri-Aditu</h1>
-            <p class="label">El Mayoral Digital Cognitivo</p>
+    <div class="glass login-card" style="padding: 40px; text-align: center;">
+        <div class="logo-box">
+            <i class="fa-solid fa-cow" style="font-size: 2.2rem; color: var(--accent);"></i>
+        </div>
+        
+        <!-- LOGIN VIEW -->
+        <div id="view-login" class="state-view active">
+            <h2 style="margin-bottom: 5px; font-weight: 800;">Bienvenido</h2>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 30px;">Inicia sesión para ver tu progreso</p>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Usuario / Email</label>
+                    <input type="text" id="login-user" placeholder="marize98" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="login-pass" placeholder="••••••••" required>
+                </div>
+                <div style="text-align: right; margin-bottom: 25px;">
+                    <a href="#" class="link-text" onclick="toggleState('view-recover')">¿Olvidaste tu contraseña?</a>
+                </div>
+                <button type="submit" class="btn-action">Iniciar Sesión</button>
+            </form>
+            <p style="margin-top: 25px; font-size: 0.85rem; color: var(--text-secondary);">
+                ¿No tienes cuenta? <a href="#" class="link-text" onclick="toggleState('view-register')">Regístrate aquí</a>
+            </p>
         </div>
 
-        <form id="login-form">
-            <input type="text" id="username" placeholder="Usuario / ID Explotación" required autocomplete="username">
-            <input type="password" id="password" placeholder="Contraseña Segura" required autocomplete="current-password">
+        <!-- REGISTER VIEW -->
+        <div id="view-register" class="state-view">
+            <h2 style="margin-bottom: 5px; font-weight: 800;">Registro</h2>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 30px;">Únete a Baserri-Aditu</p>
             
-            <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 0.8rem;">
-                <a href="#" style="color: var(--text-secondary); text-decoration: none;">¿Olvidaste tu clave?</a>
-                <a href="#" style="color: var(--accent); text-decoration: none; font-weight: 700;">Registrarse</a>
-            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label>Usuario</label>
+                    <input type="text" id="reg-user" placeholder="Ej: samuel26" required>
+                </div>
+                <div class="form-group">
+                    <label>ID Explotación</label>
+                    <input type="text" id="reg-expl" placeholder="ES48123..." required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="reg-pass" placeholder="Mínimo 8 caracteres" required>
+                </div>
+                <button type="submit" class="btn-action">Crear Cuenta</button>
+            </form>
+            <p style="margin-top: 25px; font-size: 0.85rem; color: var(--text-secondary);">
+                ¿Ya tienes cuenta? <a href="#" class="link-text" onclick="toggleState('view-login')">Inicia sesión</a>
+            </p>
+        </div>
 
-            <button type="submit" class="btn-magistral">INICIAR SESIÓN</button>
-        </form>
+        <!-- RECOVER VIEW -->
+        <div id="view-recover" class="state-view">
+            <h2 style="margin-bottom: 5px; font-weight: 800;">Recuperar</h2>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 30px;">Enviaremos un enlace a tu email</p>
+            
+            <form id="recover-form">
+                <div class="form-group">
+                    <label>Tu Email</label>
+                    <input type="email" id="rec-email" placeholder="email@ejemplo.com" required>
+                </div>
+                <button type="submit" class="btn-action">Enviar Enlace</button>
+            </form>
+            <p style="margin-top: 25px; font-size: 0.85rem; color: var(--text-secondary);">
+                <a href="#" class="link-text" onclick="toggleState('view-login')">Volver al inicio</a>
+            </p>
+        </div>
 
-        <p style="margin-top: 40px; font-size: 0.7rem; color: var(--text-secondary); opacity: 0.6;">
-            BASERRI-ADITU v1.0.4 | © LANTIC / DFB
-        </p>
+        <div style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
+            <img src="assets/img/icon-192.png" style="width: 25px; opacity: 0.6;" alt="logo">
+            <p style="font-size: 0.65rem; color: var(--text-secondary); margin-top: 10px;">
+                © 2026. iHodei. Todos los derechos reservados.<br>
+                DEVOPS / DEVELOPER: Marize Hernández
+            </p>
+        </div>
     </div>
 
     <script>
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
+        function toggleState(viewId) {
+            document.querySelectorAll('.state-view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        // Login Logic
+        document.getElementById('login-form').onsubmit = async (e) => {
             e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const username = document.getElementById('login-user').value;
+            const password = document.getElementById('login-pass').value;
             
-            try {
-                const res = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-                const data = await res.json();
-                if (data.token) {
-                    localStorage.setItem('baserri_token', data.token);
-                    localStorage.setItem('baserri_user', JSON.stringify(data.user));
-                    window.location.href = 'index.html';
-                } else {
-                    alert('Acceso denegado: ' + (data.message || 'Credenciales incorrectas'));
-                }
-            } catch (err) {
-                alert('Error magistral: No se pudo conectar con el servidor.');
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+            const data = await res.json();
+            if (data.token) {
+                localStorage.setItem('baserri_token', data.token);
+                localStorage.setItem('baserri_user', JSON.stringify(data.user));
+                window.location.href = 'index.html';
+            } else {
+                alert(data.message || 'Error en el acceso');
             }
-        });
+        };
+
+        // Register Logic
+        document.getElementById('register-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('reg-user').value;
+            const explotacion_id = document.getElementById('reg-expl').value;
+            const password = document.getElementById('reg-pass').value;
+            
+            const res = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, explotacion_id, password })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert('¡Registro magistral! Ya puedes iniciar sesión.');
+                toggleState('view-login');
+            } else {
+                alert(data.message);
+            }
+        };
+
+        // Recover Logic
+        document.getElementById('recover-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('rec-email').value;
+            const res = await fetch('/api/auth/recover', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            const data = await res.json();
+            alert(data.message);
+            toggleState('view-login');
+        };
     </script>
 </body>
 </html>

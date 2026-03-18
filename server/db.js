@@ -13,8 +13,11 @@ db.serialize(() => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE,
         password TEXT,
-        role TEXT DEFAULT 'baserritarra',
-        explotacion_id TEXT
+        role TEXT DEFAULT 'Ganadero PRO',
+        explotacion_id TEXT,
+        full_name TEXT,
+        email TEXT,
+        phone TEXT
     )`);
 
     // Livestock table
@@ -46,14 +49,14 @@ db.serialize(() => {
             db.run("INSERT INTO users (username, password, explotacion_id) VALUES (?, ?, ?)", 
                 ['marize98', hashedPass, 'ES481230009876']);
             
-            // Seed animals
-            const animals = [
-                ['ES481234567890', 'ES481230009876', 'Bovino', 'Vila', null, 'Excelente'],
-                ['ES481234567891', 'ES481230009876', 'Bovino', 'Vila', null, 'Bien'],
-                ['ES481234567892', 'ES481230009876', 'Bovino', 'Vila', null, 'Regular']
+            // Seed movements/reports
+            const movements = [
+                ['ES481234567890', 'ES481230009876', 'Mercado Gernika', '2026-03-18', 'Firmado'],
+                ['ES481234567891', 'ES481230009876', 'Matadero Bilbao', '2026-03-17', 'Pendiente'],
+                ['ES481234567892', 'ES481230009876', 'Explotación Vecina', '2026-03-15', 'Firmado']
             ];
-            animals.forEach(a => {
-                db.run("INSERT INTO animals (id, explotacion_id, tipo, estado, madre_id, sanidad) VALUES (?, ?, ?, ?, ?, ?)", a);
+            movements.forEach(m => {
+                db.run("INSERT INTO movements (animal_id, origen, destino, fecha, guia_status) VALUES (?, ?, ?, ?, ?)", m);
             });
         }
     });

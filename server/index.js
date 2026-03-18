@@ -15,9 +15,11 @@ app.use(express.json());
 // Routes
 const authRoutes = require('./routes/auth');
 const livestockRoutes = require('./routes/livestock');
+const userRoutes = require('./routes/user');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/livestock', livestockRoutes);
+app.use('/api/user', userRoutes);
 
 // Health Check
 app.get('/health', (req, res) => {

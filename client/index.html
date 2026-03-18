@@ -9,69 +9,155 @@
 </head>
 <body>
     <main id="app" style="padding: 20px 20px 100px 20px;">
-        <!-- Header -->
-        <header style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <h1 id="welcome-msg">Kaixo!</h1>
-                <p class="label">EXPL: ${user.explotacion_id}</p>
-            </div>
-            <div class="glass" style="padding: 5px 12px; font-weight: 800; cursor: pointer;">ES/EU</div>
-        </header>
-
-        <!-- Dynamic Views -->
+        
+        <!-- DYNAMIC VIEWS -->
+        
+        <!-- 1. DASHBOARD VIEW -->
         <div id="view-dashboard" class="view">
-            <div class="glass alert-banner" style="margin-bottom: 25px;">
-                <p class="label" style="color: var(--danger); font-weight: 900;">ALERTA SANITARIA</p>
-                <p style="margin-top: 10px; line-height: 1.6;">Zona Bizkaia: Vacunación obligatoria activa.</p>
+            <!-- Magistral Greeting -->
+            <div class="greeting-section">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h1 id="greeting-text" class="neon-text">¡Cargando...</h1>
+                        <p style="color: rgba(255,255,255,0.6); margin-top: 5px;">¡Hola! Tu explotación te espera. Inicia tu jornada para empezar a brillar. ✨</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px; font-size: 0.65rem;">
+                    <div class="glass" style="padding: 5px 12px; border-radius: 20px;">
+                        <i class="fa-regular fa-calendar"></i> <span id="current-date">Miércoles, 18 de marzo de 2026</span>
+                    </div>
+                    <div class="glass" style="padding: 5px 12px; border-radius: 20px;">
+                        <i class="fa-solid fa-location-dot"></i> Sede: <span id="sede-time">02:34</span>
+                    </div>
+                    <div class="glass" style="padding: 5px 12px; border-radius: 20px;">
+                        <i class="fa-solid fa-clock"></i> Mi Hora: <span id="local-time">02:34</span>
+                    </div>
+                </div>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px;">
-                <div class="glass">
+                <div class="glass premium-card">
                     <p class="label">Censo Bovino</p>
                     <h2 id="census-count" style="font-size: 2.5rem; margin: 10px 0;">--</h2>
-                    <span style="color: var(--success); font-weight: 700;">● Vila</span>
+                    <span style="color: var(--success); font-weight: 700;">● Online</span>
                 </div>
-                <div class="glass" onclick="baserriApp.generateReport()">
-                    <p class="label">Trámites</p>
+                <div class="glass premium-card">
+                    <p class="label">Trámites Pendientes</p>
                     <h2 style="font-size: 2.5rem; margin: 10px 0;">3</h2>
-                    <span style="color: var(--accent); font-weight: 700;">Pendientes</span>
+                    <span style="color: var(--danger); font-weight: 700;">● Acción Requerida</span>
                 </div>
             </div>
 
-            <h3 class="label" style="margin-bottom: 15px;">Gestiones Rápidas</h3>
+            <h3 class="label" style="margin-bottom: 15px;">Acciones Rápidas</h3>
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <div class="glass premium-card" style="display: flex; justify-content: space-between; align-items: center;" onclick="baserriVoice.speak('Dime el crotal para la guía de salida.')">
-                    <span><i class="fa-solid fa-truck-moving" style="color: var(--accent);"></i> Solicitar Guía</span>
-                    <i class="fa-solid fa-chevron-right"></i>
+                    <span><i class="fa-solid fa-truck-moving accent-blue"></i> Solicitar Guía de Salida</span>
+                    <i class="fa-solid fa-chevron-right" style="opacity: 0.3;"></i>
                 </div>
-                <div class="glass premium-card" style="display: flex; justify-content: space-between; align-items: center;" onclick="baserriVoice.speak('Preparado para registrar nacimiento. ¿Croctal de la madre?')">
-                    <span><i class="fa-solid fa-cow" style="color: var(--accent);"></i> Registrar Nacimiento</span>
-                    <i class="fa-solid fa-chevron-right"></i>
+                <div class="glass premium-card" style="display: flex; justify-content: space-between; align-items: center;" onclick="baserriVoice.speak('Preparado para registrar nacimiento.')">
+                    <span><i class="fa-solid fa-cow accent-purple"></i> Registrar Nacimiento</span>
+                    <i class="fa-solid fa-chevron-right" style="opacity: 0.3;"></i>
                 </div>
             </div>
         </div>
 
+        <!-- 2. REPORTES VIEW -->
         <div id="view-tramites" class="view" style="display:none;">
-            <h2 style="margin-bottom: 20px;">Trámites Oficiales</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 class="neon-text">Jornadas y Fichajes</h2>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn-pill" style="color: #ff4757;"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                    <button class="btn-pill" style="color: #2ed573;"><i class="fa-solid fa-file-excel"></i> EXCEL</button>
+                    <button class="btn-pill" style="color: #ffa502;"><i class="fa-solid fa-file-csv"></i> CSV</button>
+                </div>
+            </div>
+
             <div class="glass">
-                <p>Histórico de guías y movimientos SITRAN.</p>
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Trámite</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reports-body">
+                        <tr>
+                            <td>18 Mar 2026</td>
+                            <td>Solicitud Guía ES481...</td>
+                            <td><span class="status-dot" style="background: var(--success);"></span> Firmado</td>
+                            <td><i class="fa-solid fa-ellipsis"></i></td>
+                        </tr>
+                        <tr>
+                            <td>17 Mar 2026</td>
+                            <td>Registro Nacimiento</td>
+                            <td><span class="status-dot" style="background: var(--accent);"></span> Pendiente</td>
+                            <td><i class="fa-solid fa-ellipsis"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
+        <!-- 3. SANIDAD VIEW -->
         <div id="view-sanidad" class="view" style="display:none;">
-            <h2 style="margin-bottom: 20px;">Sanidad Animal</h2>
-            <div class="glass">
-                <p>Campañas de vacunación y resultados laboratorio.</p>
+            <h2 class="neon-text" style="margin-bottom: 25px;">Sanidad Animal</h2>
+            <div class="glass alert-banner" style="margin-bottom: 20px;">
+                <p class="label" style="color: var(--danger);">AVISO CRÍTICO</p>
+                <p style="margin-top: 10px;">Campaña de vacunación obligatoria 2026 en curso.</p>
+            </div>
+            <div class="glass profile-card">
+                <h3 style="margin-bottom: 15px;">Últimos Resultados</h3>
+                <div class="data-item"><span class="data-label">Brucelosis</span><span class="data-value" style="color: var(--success);">Negativo</span></div>
+                <div class="data-item"><span class="data-label">Tuberculosis</span><span class="data-value" style="color: var(--success);">Negativo</span></div>
             </div>
         </div>
 
+        <!-- 4. PERFIL VIEW -->
         <div id="view-perfil" class="view" style="display:none;">
-            <h2 style="margin-bottom: 20px;">Mi Perfil</h2>
-            <div class="glass" style="text-align: center;">
-                <i class="fa-solid fa-circle-user" style="font-size: 4rem; color: var(--accent); margin-bottom: 15px;"></i>
-                <h3 id="profile-name">Expl. Bizkaia</h3>
-                <button onclick="baserriApp.logout()" class="glass" style="margin-top: 20px; color: var(--danger); border-color: var(--danger); width: 100%;">CERRAR SESIÓN</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h2 class="neon-text">Mi Perfil</h2>
+                <button class="btn-pill" onclick="openEditModal()"><i class="fa-solid fa-lock"></i> Editar Perfil</button>
             </div>
+
+            <div class="glass" style="display: flex; align-items: center; gap: 20px; margin-bottom: 30px; position: relative;">
+                <div style="position: relative;">
+                    <img id="profile-img" src="https://source.unsplash.com/100x100/?farmer,face" style="width: 80px; height: 80px; border-radius: 20px; border: 2px solid var(--accent);" alt="Avatar">
+                    <div style="position: absolute; bottom: -5px; right: -5px; width: 20px; height: 20px; background: var(--success); border-radius: 50%; border: 3px solid #111;"></div>
+                </div>
+                <div>
+                    <h1 id="profile-name-full" style="font-size: 1.5rem;">Samuel</h1>
+                    <p class="label" id="profile-role" style="color: var(--accent);">♛ GANADERO PRO</p>
+                    <div style="display: flex; gap: 15px; margin-top: 10px; font-size: 0.75rem; opacity: 0.6;">
+                        <span><i class="fa-solid fa-id-badge"></i> ID: <span id="profile-id">--</span></span>
+                        <span><i class="fa-solid fa-location-arrow"></i> Bizkaia, EU</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-grid">
+                <div class="profile-card">
+                    <h3 class="label" style="margin-bottom: 20px;"><i class="fa-solid fa-file-contract"></i> Datos Contractuales</h3>
+                    <div class="data-item"><span class="data-label">Fecha Ingreso</span><span class="data-value">22 feb 2026</span></div>
+                    <div class="data-item"><span class="data-label">Firma Contrato</span><span class="data-value" style="color: var(--success);">16 mar 2026 ●</span></div>
+                    <div class="data-item"><span class="data-label">Tipo Contrato</span><span class="data-value">Titular Explotación</span></div>
+                </div>
+                <div class="profile-card">
+                    <h3 class="label" style="margin-bottom: 20px;"><i class="fa-solid fa-wallet"></i> Compensación</h3>
+                    <div class="data-item"><span class="data-label">PAC Estimada</span><span class="data-value">••••••••</span></div>
+                    <div class="data-item"><span class="data-label">Cuenta Bancaria</span><span class="data-value">ES48 •••• 1234</span></div>
+                    <div class="data-item"><span class="data-label">Fecha de Nacimiento</span><span class="data-value" id="profile-birth">01 mar 1998</span></div>
+                </div>
+                <div class="profile-card">
+                    <h3 class="label" style="margin-bottom: 20px;"><i class="fa-solid fa-info-circle"></i> Información Adicional</h3>
+                    <div class="data-item"><span class="data-label">Email</span><span id="profile-email-val" class="data-value">user@baserri.eus</span></div>
+                    <div class="data-item"><span class="data-label">Teléfono</span><span id="profile-phone-val" class="data-value">+34 600 000 000</span></div>
+                    <div class="data-item"><span class="data-label">Contacto Emergencia</span><span class="data-value">--</span></div>
+                </div>
+            </div>
+
+            <button onclick="baserriApp.logout()" class="glass" style="margin-top: 40px; color: var(--danger); border-color: var(--danger); width: 100%; border-radius: 12px; font-weight: 700;">CERRAR SESIÓN</button>
         </div>
     </main>
 
@@ -79,11 +165,11 @@
     <nav class="bottom-nav">
         <a href="#" class="nav-item active" data-view="view-dashboard">
             <i class="fa-solid fa-house"></i>
-            <span>Inicio</span>
+            <span>Dashboard</span>
         </a>
         <a href="#" class="nav-item" data-view="view-tramites">
             <i class="fa-solid fa-clipboard-list"></i>
-            <span>Trámites</span>
+            <span>Reportes</span>
         </a>
         
         <div id="mic-btn" class="mic-btn" onclick="baserriVoice.toggle()">
@@ -96,13 +182,47 @@
         </a>
         <a href="#" class="nav-item" data-view="view-perfil">
             <i class="fa-solid fa-user-gear"></i>
-            <span>Perfil</span>
+            <span>Mi Perfil</span>
         </a>
     </nav>
+
+    <!-- MODAL EDIT PROFILE -->
+    <div id="edit-modal" class="modal-overlay" onclick="if(event.target == this) closeEditModal()">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 class="neon-text" style="font-size: 1.2rem;">Editar Información Personal</h2>
+                <i class="fa-solid fa-xmark" style="cursor: pointer; opacity: 0.5;" onclick="closeEditModal()"></i>
+            </div>
+            <form id="edit-profile-form">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="edit-name" placeholder="Samuel">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="edit-email" placeholder="user@baserri.eus">
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="text" id="edit-phone" placeholder="+34 600...">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 30px;">
+                    <button type="button" class="glass" style="flex: 1; border-radius: 12px;" onclick="closeEditModal()">Cancelar</button>
+                    <button type="submit" class="btn-action" style="flex: 1; margin-top: 0; border-radius: 12px;"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="assets/js/i18n.js"></script>
     <script src="assets/js/confianza.js"></script>
     <script src="assets/js/voice-engine.js"></script>
     <script src="assets/js/app.js"></script>
+    <script>
+        function openEditModal() { document.getElementById('edit-modal').style.display = 'flex'; }
+        function closeEditModal() { document.getElementById('edit-modal').style.display = 'none'; }
+    </script>
 </body>
 </html>
