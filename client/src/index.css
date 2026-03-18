@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  background-color: #0F172A;
+  color: white;
+  font-family: 'Outfit', sans-serif;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+}
+
+.mic-active {
+  box-shadow: 0 0 0 0 rgba(0, 186, 81, 0.7);
+  animation: pulse-mic 1.5s infinite;
+}
+
+@keyframes pulse-mic {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 186, 81, 0.7); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 30px rgba(0, 186, 81, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 186, 81, 0); }
+}
+
+.status-indicator {
+  @apply flex items-center gap-2 text-xs font-semibold;
+}
+
+.online-pulse {
+  @apply w-2 h-2 rounded-full bg-baserri-green animate-pulse;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
